@@ -14,7 +14,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 ---
 
-# 🎯 Objectives
+## 🎯 Objectives
 
 - Deploy an internet-facing Windows virtual machine
 - Configure MySQL audit logging
@@ -28,7 +28,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 ---
 
-# 🛠️ Technologies Used
+## 🛠️ Technologies Used
 
 | Category | Technologies |
 |----------|--------------|
@@ -44,7 +44,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 ---
 
-# 🏗️ Architecture
+## 🏗️ Architecture
 
 <img width="1536" height="1024" alt="Honeypotarch" src="https://github.com/user-attachments/assets/43c1ffca-7429-420a-9010-036792c235f9" />
 
