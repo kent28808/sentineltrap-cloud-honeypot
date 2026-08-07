@@ -46,13 +46,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 # 🏗️ Architecture
 
-> **📷 INSERT ARCHITECTURE DIAGRAM HERE**
-
-Example:
-
-```
-images/architecture.png
-```
+<img width="1536" height="1024" alt="Honeypotarch" src="https://github.com/user-attachments/assets/43c1ffca-7429-420a-9010-036792c235f9" />
 
 The environment consists of:
 
