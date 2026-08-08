@@ -108,6 +108,8 @@ Installed MySQL Community Server and populated a sample corporate database. Enab
 
 *Figure 5. MySQL Workbench connected to the honeypot database, showing the populated kt_corp schema and successful query execution against simulated corporate data.*
 
+<br><br>
+
 <img width="1182" height="954" alt="mysql2" src="https://github.com/user-attachments/assets/a64cb0e5-3fcc-4e51-9b2c-ebec3f326138" />
 
 *Figure 6. mysql_general.log capturing authentication and query activity generated during database validation, confirming that database events were being recorded for subsequent security monitoring and centralized log collection.*
@@ -125,12 +127,21 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL 
 - Forwarded MySQL logs
 - Verified telemetry ingestion
 
-### 📷 Screenshots
+<img width="1446" height="457" alt="dcr" src="https://github.com/user-attachments/assets/48452cd4-06d1-44ab-81c4-004d2b344c8f" />
 
-- [ ] Data Collection Rule
-- [ ] Azure Monitor Agent Extension
-- [ ] MySQLAudit_CL Table
-- [ ] Log Analytics Query Results
+*Figure 7. Azure Monitor Data Collection Rule configured to collect the MySQL general log and forward the telemetry to the LAW-Cyber-Range Log Analytics workspace for centralized security monitoring.*
+
+<br><br>
+
+<img width="1675" height="941" alt="Azureagent" src="https://github.com/user-attachments/assets/d3f9c324-5152-48eb-847e-a3d5178aa370" />
+
+*Figure 8\. Azure Monitor Agent successfully installed on the Windows honeypot VM, providing the telemetry collection mechanism used to forward MySQL audit logs to Azure Log Analytics.*
+
+<br><br>
+
+<img width="1188" height="981" alt="mysqlaudi" src="https://github.com/user-attachments/assets/1ca56ebe-862a-4351-a61b-c3c6ac691e18" />
+
+*Figure 9. MySQLAudit_CL telemetry in Azure Log Analytics confirming successful ingestion of MySQL authentication and query events from the honeypot VM through Azure Monitor Agent and the configured Data Collection Rule.*
 
 ---
 
