@@ -65,7 +65,7 @@ Telemetry from both Windows and MySQL is centralized into Azure Log Analytics, w
 
 # 🔄 Project Workflow
 
-## Phase 1 — Build & Harden
+## Phase 1: Build & Harden
 
 A Windows virtual machine was deployed in Azure with Microsoft Defender for Endpoint onboarded while inbound internet access remained blocked.
 
@@ -93,7 +93,7 @@ A Windows virtual machine was deployed in Azure with Microsoft Defender for Endp
 
 ---
 
-## Phase 2 — Configure MySQL
+## Phase 2: Configure MySQL
 
 Installed MySQL Community Server and populated a sample corporate database. Enabled general query logging and authentication logging to capture all database activity.
 
@@ -116,7 +116,7 @@ Installed MySQL Community Server and populated a sample corporate database. Enab
 
 ---
 
-## Phase 3 — Centralize Logging
+## Phase 3: Centralize Logging
 
 Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL audit logs into Azure Log Analytics.
 
@@ -145,7 +145,7 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL 
 
 ---
 
-## Phase 4 — Detection Engineering
+## Phase 4: Detection Engineering
 
 Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (KQL) to detect suspicious authentication activity.
 
@@ -166,7 +166,7 @@ Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (
 
 ---
 
-## Phase 5 — Controlled Exposure
+## Phase 5: Controlled Exposure
 
 After validating detections, the environment was intentionally weakened and exposed to the public internet to attract real attacker traffic.
 
@@ -190,7 +190,7 @@ The exposure timestamp was documented to measure the time-to-compromise.
 
 ---
 
-## Phase 6 — Threat Detection
+## Phase 6: Threat Detection
 
 Monitored attacker activity using Microsoft Defender and Microsoft Sentinel after exposing the environment.
 
@@ -214,7 +214,7 @@ Monitored attacker activity using Microsoft Defender and Microsoft Sentinel afte
 
 ---
 
-## Phase 7 — Incident Investigation
+## Phase 7: Incident Investigation
 
 Investigated attacker behavior by correlating endpoint telemetry with database activity.
 
@@ -251,7 +251,7 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 
 ---
 
-## Phase 8 — Containment
+## Phase 8: Containment
 
 After sufficient evidence was collected, the compromised endpoint was isolated using Microsoft Defender for Endpoint.
 
@@ -269,7 +269,7 @@ After sufficient evidence was collected, the compromised endpoint was isolated u
 
 ---
 
-## Phase 9 — Recovery
+## Phase 9: Recovery
 
 Following investigation, security controls were restored.
 
