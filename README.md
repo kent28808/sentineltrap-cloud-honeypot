@@ -10,7 +10,7 @@ This project demonstrates the complete lifecycle of detecting and responding to 
 
 Using Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and Azure Log Analytics, I collected telemetry, built custom detection rules, investigated attacker behavior, contained the compromise, and documented the incident.
 
-Unlike a traditional honeypot demonstration, this project emphasizes the complete defensive workflow—from secure deployment and detection engineering to threat hunting, incident response, and recovery.
+Unlike a traditional honeypot demonstration, this project emphasizes the complete defensive workflow from secure deployment and detection engineering to threat hunting, incident response, and recovery.
 
 ---
 
@@ -48,6 +48,8 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 <img width="1536" height="1024" alt="Honeypotarch" src="https://github.com/user-attachments/assets/43c1ffca-7429-420a-9010-036792c235f9" />
 
+*Figure 1. High-level architecture of the Azure SOC honeypot, showing the Windows virtual machine, centralized telemetry collection through Azure Monitor Agent and Microsoft Sentinel, GeoIP enrichment, attack visualization, and security monitoring and detection workflows.*
+
 The environment consists of:
 
 - Windows 11 Virtual Machine
@@ -71,15 +73,23 @@ A Windows virtual machine was deployed in Azure with Microsoft Defender for Endp
 
 - Created Windows 11 VM
 - Configured Public IP
-- Denforced inbound deny rules
+- Enforced inbound deny rules
 - Onboarded VM to Microsoft Defender for Endpoint
 - Verified Defender telemetry
 
-### 📷 Screenshots
+<img width="1670" height="1275" alt="azurevm" src="https://github.com/user-attachments/assets/c20d7703-7959-48f1-8d6d-7d1926739a2b" />
 
-- [ ] Azure VM Overview
-- [ ] Microsoft Defender Device Inventory
-- [ ] DeviceInfo Table
+*Figure 2. Azure Virtual Machine overview of the Windows 11 honeypot, documenting the initial compute, networking, and public-facing configuration before telemetry collection, detection engineering, and controlled exposure.*
+
+<br><br>
+<img width="1668" height="1135" alt="Defender1" src="https://github.com/user-attachments/assets/245510c2-ee60-44ac-a9b3-ca9bab97864f" />
+
+*Figure 3. Microsoft Defender for Endpoint Device Inventory showing the deployed Windows 11 honeypot and confirming successful endpoint onboarding and active telemetry reporting.*
+
+<br><br>
+<img width="1094" height="757" alt="Defender2" src="https://github.com/user-attachments/assets/266a7f37-c02a-467a-97f9-fb352d3d3ae4" />
+
+*Figure 4. Microsoft Defender Advanced Hunting DeviceInfo results validating telemetry from the Windows 11 honeypot and confirming the endpoint's identity and operating system information.*
 
 ---
 
