@@ -104,12 +104,13 @@ Installed MySQL Community Server and populated a sample corporate database. Enab
 - Enabled General Query Log
 - Verified logging functionality
 
-### 📷 Screenshots
+<img width="1197" height="972" alt="mysql1" src="https://github.com/user-attachments/assets/02e3452f-c5fc-4ca0-a519-8a27df539ccf" />
 
-- [ ] MySQL Workbench
-- [ ] Imported Database
-- [ ] General Log Enabled
-- [ ] Sample SQL Queries
+*Figure 5. MySQL Workbench connected to the honeypot database, showing the populated kt_corp schema and successful query execution against simulated corporate data.*
+
+<img width="1182" height="954" alt="mysql2" src="https://github.com/user-attachments/assets/a64cb0e5-3fcc-4e51-9b2c-ebec3f326138" />
+
+*Figure 6. mysql_general.log capturing authentication and query activity generated during database validation, confirming that database events were being recorded for subsequent security monitoring and centralized log collection.*
 
 ---
 
