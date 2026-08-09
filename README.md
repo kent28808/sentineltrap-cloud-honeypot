@@ -185,15 +185,15 @@ The exposure timestamp was documented to measure the time-to-compromise: 2026-07
 
 <img width="1046" height="415" alt="users" src="https://github.com/user-attachments/assets/52879347-d1fa-4262-8af6-3173175d45f2" />
 
-*Figure 13. Windows local account configuration showing the Administrator and Guest accounts enabled as part of the controlled honeypot exposure, creating intentionally weakened authentication controls for subsequent attack detection.*
+*Figure 12. Windows local account configuration showing the Administrator and Guest accounts enabled as part of the controlled honeypot exposure, creating intentionally weakened authentication controls for subsequent attack detection.*
 
 <br><br>
 <img width="1335" height="222" alt="inbound" src="https://github.com/user-attachments/assets/5e019db5-6f27-4482-a883-90ec5f06bb6e" />
-*Figure 14. Azure Network Security Group configuration showing the honeypot intentionally exposed to inbound Internet traffic, increasing its discoverability and allowing external attack activity to reach the environment.*
+*Figure 13. Azure Network Security Group configuration showing the honeypot intentionally exposed to inbound Internet traffic, increasing its discoverability and allowing external attack activity to reach the environment.*
 
 <br><br>
 <img width="883" height="398" alt="firewall" src="https://github.com/user-attachments/assets/9e291d6c-b0a7-4f59-97a8-1b5ead63d032" />     
-*Figure 15. Windows Defender Firewall intentionally disabled as part of the controlled exposure phase, removing a host-level network control to increase the honeypot's visibility and attack surface.*
+*Figure 14. Windows Defender Firewall intentionally disabled as part of the controlled exposure phase, removing a host-level network control to increase the honeypot's visibility and attack surface.*
 
 ---
 
@@ -211,13 +211,20 @@ Monitored attacker activity using Microsoft Defender and Microsoft Sentinel afte
 - NTANetAnalytics
 - MySQLAudit_CL
 
-### 📷 Screenshots
+<img width="1462" height="1221" alt="incident" src="https://github.com/user-attachments/assets/6eb4de7d-36c3-46ea-ad37-ca8ad70f01d2" />
+*Figure 15. Microsoft Sentinel incident generated from honeypot telemetry, demonstrating detection of suspicious authentication activity following controlled exposure of the Windows environment.*
 
-- [ ] Sentinel Incident
-- [ ] Device Logon Events
-- [ ] MySQL Authentication Events
-- [ ] Network Events
-- [ ] MySQL Queries
+<br><br>
+<img width="1517" height="1193" alt="windows" src="https://github.com/user-attachments/assets/dca8729e-4cab-4bc0-8309-1b8816f6a793" />
+*Figure 16. Microsoft Defender DeviceLogonEvents telemetry showing remote authentication activity against the exposed Windows honeypot, including targeted accounts, source IP addresses, authentication results, and event timestamps.*
+
+<br><br>
+<img width="1495" height="1185" alt="mysql1" src="https://github.com/user-attachments/assets/d02ed718-a899-4825-aeac-6464132c2e4d" />
+*Figure 17. MySQLAudit_CL telemetry showing external authentication activity against the exposed MySQL service, including connection timestamps, usernames, and source IP addresses.*
+
+<br><br>
+<img width="1505" height="1196" alt="mysql2" src="https://github.com/user-attachments/assets/bf0615f5-467f-4ffa-95b7-1075ad88ebc7" />
+*Figure 18. MySQL query telemetry collected in MySQLAudit_CL following authentication, providing visibility into database activity performed against the honeypot and supporting post-compromise investigation.*
 
 ---
 
