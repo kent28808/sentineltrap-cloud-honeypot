@@ -181,14 +181,19 @@ After validating detections, the environment was intentionally weakened and expo
 - Allowed inbound NSG traffic
 - Exposed MySQL externally
 
-The exposure timestamp was documented to measure the time-to-compromise.
+The exposure timestamp was documented to measure the time-to-compromise: 2026-07-30T18:44:02.1690712Z
 
-### 📷 Screenshots
+<img width="1046" height="415" alt="users" src="https://github.com/user-attachments/assets/52879347-d1fa-4262-8af6-3173175d45f2" />
 
-- [ ] Network Security Group
-- [ ] Windows Firewall Disabled
-- [ ] MySQL Remote Authentication
-- [ ] Exposure Timestamp
+*Figure 13. Windows local account configuration showing the Administrator and Guest accounts enabled as part of the controlled honeypot exposure, creating intentionally weakened authentication controls for subsequent attack detection.*
+
+<br><br>
+<img width="1335" height="222" alt="inbound" src="https://github.com/user-attachments/assets/5e019db5-6f27-4482-a883-90ec5f06bb6e" />
+*Figure 14. Azure Network Security Group configuration showing the honeypot intentionally exposed to inbound Internet traffic, increasing its discoverability and allowing external attack activity to reach the environment.*
+
+<br><br>
+<img width="883" height="398" alt="firewall" src="https://github.com/user-attachments/assets/9e291d6c-b0a7-4f59-97a8-1b5ead63d032" />     
+*Figure 15. Windows Defender Firewall intentionally disabled as part of the controlled exposure phase, removing a host-level network control to increase the honeypot's visibility and attack surface.*
 
 ---
 
