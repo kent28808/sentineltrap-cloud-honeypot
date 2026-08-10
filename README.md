@@ -242,26 +242,25 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 - Discovery
 - Collection
 
-### 📷 Screenshots
+<img width="1501" height="1168" alt="19" src="https://github.com/user-attachments/assets/167e9661-ad39-40cc-8032-5ae1f886ce51" />
+*Figure 19. Defender Advanced Hunting authentication activity. Authentication telemetry was queried following the documented exposure timestamp to identify successful and failed logon activity, associated accounts, remote source IP addresses, and authentication protocols.*
 
-- [ ] Defender Advanced Hunting
-- [ ] Process Tree
-- [ ] Device Timeline
-- [ ] MySQL Query Activity
+<br><br>
+<img width="1289" height="1220" alt="20" src="https://github.com/user-attachments/assets/c9aa42de-d404-44ef-89cb-88cd2c5844e4" />
+*Figure 20. Defender process tree investigation. The process tree shows Octo Browser.exe spawning powershell.exe on the affected endpoint. The PowerShell command queried Win32_ComputerSystemProduct to retrieve the system UUID, representing system-information discovery activity identified during the incident investigation.*
 
----
-
+<br><br>
 ## 📊 Attack Timeline
+<img width="1584" height="1181" alt="21" src="https://github.com/user-attachments/assets/a3264006-5844-4646-a57a-1c1b4a202a76" />
+*Figure 21. Defender device timeline investigation. The corp-dc01 device timeline was reviewed to establish the chronological sequence of endpoint activity surrounding the observed PowerShell execution.*
 
-| Time | Event |
-|------|-------|
-| **YYYY-MM-DD HH:MM UTC** | Environment exposed |
-| **YYYY-MM-DD HH:MM UTC** | First inbound scan detected |
-| **YYYY-MM-DD HH:MM UTC** | First failed RDP authentication |
-| **YYYY-MM-DD HH:MM UTC** | First successful logon |
-| **YYYY-MM-DD HH:MM UTC** | MySQL authentication |
-| **YYYY-MM-DD HH:MM UTC** | Database queries observed |
-| **YYYY-MM-DD HH:MM UTC** | Device isolated |
+<br><br>
+<img width="1489" height="1169" alt="22" src="https://github.com/user-attachments/assets/310dde26-d1cc-4353-965d-3df3d06490f7" />
+*Figure 22. MySQL destructive query activity. MySQL audit telemetry shows the kt_corp tables being enumerated and subsequently deleted, followed by creation of a RECOVER_YOUR_DATA table containing a Bitcoin ransom demand. The sequence demonstrates destructive database activity and extortion behavior identified during the incident investigation.*
+
+<br><br>
+<img width="1498" height="1087" alt="23" src="https://github.com/user-attachments/assets/8c425b3d-980a-4785-81eb-194f555ef82f" />
+*Figure 23. Network activity investigation. Microsoft Defender network telemetry was reviewed to identify connections associated with the affected endpoint and correlate network activity with the MySQL compromise. Particular attention was given to connections involving the remote host 64.89.163.79 and MySQL service traffic observed during the destructive database activity.*
 
 ---
 
