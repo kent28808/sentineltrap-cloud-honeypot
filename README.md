@@ -266,34 +266,44 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 
 ## Phase 8: Containment
 
-After sufficient evidence was collected, the compromised endpoint was isolated using Microsoft Defender for Endpoint.
+After sufficient evidence was collected, containment measures were implemented to prevent further unauthorized access while preserving forensic evidence for investigation.
 
 ### Actions Performed
 
-- Isolated endpoint
+- Isolated corp-dc01 using Microsoft Defender for Endpoint
 - Captured Investigation Package
 - Preserved forensic evidence
+- Restored restrictive Azure Network Security Group (NSG) rules
 
-### 📷 Screenshots
+Isolation timestamp: 2026-08-11T16:37:48.0000000Z
 
-- [ ] Device Isolation
-- [ ] Defender Response Actions
-- [ ] Investigation Package
+<img width="1555" height="943" alt="isolation" src="https://github.com/user-attachments/assets/89dc17c9-b586-48e9-a1c2-232ca94b2177" />
+*Figure 24. Endpoint isolation. The affected corp-dc01 endpoint was isolated using Microsoft Defender for Endpoint to restrict network communication and prevent additional remote activity while containment and remediation actions were performed.*
+
+<img width="1643" height="418" alt="NSG" src="https://github.com/user-attachments/assets/d937a456-09d8-434d-b676-21de095d3fdf" />
+*Figure 25. Network and MySQL service containment. The Azure Network Security Group was restored to its original restrictive configuration following the investigation. Permissive inbound access used during the controlled exposure was removed, including public access to the MySQL service on TCP port 3306, reducing the external attack surface and preventing additional unauthorized connections.*
+
+### [ ] Investigation Package
 
 ---
 
-## Phase 9: Recovery
+## Phase 9: Eradication and Recovery
 
-Following investigation, security controls were restored.
+Following containment, the environment was remediated to remove insecure configurations and restore normal operation.
+
+### Eradication Actions
+- Hardened the Administrator account
+- Disabled the Guest account
+- Rotated or secured exposed administrative credentials
+- Removed unauthorized or malicious database artifacts
+- Verified that unnecessary remote administrative access was disabled
 
 ### Recovery Actions
-
-- Enabled Windows Firewall
-- Hardened Administrator account
-- Disabled Guest account
-- Restricted NSG rules
-- Removed public MySQL access
-- Restored database backup
+- Re-enabled Windows Defender Firewall
+- Restored the affected MySQL database from backup
+- Verified that the expected databases and tables were available
+- Confirmed legitimate access to the restored environment
+- Validated that security controls remained enabled following recovery
 
 ---
 
