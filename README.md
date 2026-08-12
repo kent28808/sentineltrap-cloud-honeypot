@@ -330,13 +330,15 @@ Therefore, containment reduced the immediate risk but did not return the system 
 
 ## Phase 9: Eradication and Recovery
 
-Following containment, the environment was remediated to remove insecure configurations and restore normal operation.
+Following containment, the compromised environment was remediated and restored to a secure operational state.
+
+In a production environment, rebuilding a compromised endpoint from a known-good image would generally provide greater assurance than attempting to clean an affected system in place. For this lab, the existing VM was retained so that remediation, hardening, and recovery procedures could be demonstrated.
 
 ### Eradication Actions
 - Hardened the Administrator account
 - Disabled the Guest account
-- Rotated or secured exposed administrative credentials
-- Removed unauthorized or malicious database artifacts
+- Secured exposed administrative credentials
+- Run a full malware scan using Windows Defender
 - Verified that unnecessary remote administrative access was disabled
 
 ### Recovery Actions
@@ -345,6 +347,38 @@ Following containment, the environment was remediated to remove insecure configu
 - Verified that the expected databases and tables were available
 - Confirmed legitimate access to the restored environment
 - Validated that security controls remained enabled following recovery
+
+
+<img width="1671" height="977" alt="firewall" src="https://github.com/user-attachments/assets/9e146856-c3cc-4791-9b35-2d28155a47d4" />
+*Figure 26. Security controls restored. Windows Defender Firewall and other endpoint security controls were restored following containment, while administrative access and credentials were hardened as part of eradication.*
+
+<br><br>
+<img width="1215" height="946" alt="antivirus" src="https://github.com/user-attachments/assets/9caa394f-639b-4e1b-a752-f5913d9e4010" />
+*Figure 27. Post-containment malware scan. A full Microsoft Defender Antivirus scan was initiated on corp-dc01 following containment to identify potential malware or other malicious artifacts before the endpoint was returned to normal operation.*
+
+<br><br>
+<img width="1395" height="1239" alt="sql" src="https://github.com/user-attachments/assets/23dd5a07-df18-4c05-9870-d72d81016ca7" />
+*Figure 28. MySQL database recovery. The affected kt_corp database was restored to a known-good state following destructive database activity, and the expected application tables were verified as present and operational.*
+
+---
+# Phase 10: Incident Reporting and Forensic Analysis
+
+Following containment, eradication, and recovery, endpoint, network, authentication, and database telemetry were correlated to reconstruct the incident and document its scope, impact, and response.
+
+The final incident report includes:
+
+- End-to-end attack timeline
+- Defender endpoint investigation
+- MySQL authentication and query analysis
+- Network activity analysis
+- Indicators of Compromise (IOCs)
+- Machine-level forensic comparison
+- Containment and remediation actions
+- Recovery validation
+- Lessons learned and security recommendations
+
+📄 **[View Final Incident Report (PDF)](./reports/Incident-Response-Report.pdf)**
+
 
 ---
 
