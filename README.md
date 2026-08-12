@@ -266,24 +266,65 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 
 ## Phase 8: Containment
 
-After sufficient evidence was collected, containment measures were implemented to prevent further unauthorized access while preserving forensic evidence for investigation.
+After confirming unauthorized endpoint and database activity, `CORP-DC01` was isolated using Microsoft Defender for Endpoint to prevent further attacker communication while preserving the system for forensic collection.
 
 ### Actions Performed
 
-- Isolated corp-dc01 using Microsoft Defender for Endpoint
-- Captured Investigation Package
-- Preserved forensic evidence
-- Restored restrictive Azure Network Security Group (NSG) rules
+- Isolated `CORP-DC01` through Microsoft Defender for Endpoint.
+- Kept the VM powered on to preserve volatile and forensic evidence.
+- Restored restrictive Azure Network Security Group rules.
+- Removed public Internet access to MySQL port `3306`.
+- Collected a post-isolation Microsoft Defender investigation package.
+- Recorded the isolation and evidence-collection timestamps for timeline correlation.
 
-Isolation timestamp: 2026-08-11T16:37:48.0000000Z
+#### Isolation timestamp: `2026-08-11T16:37:48.0000000Z`
 
 <img width="1555" height="943" alt="isolation" src="https://github.com/user-attachments/assets/89dc17c9-b586-48e9-a1c2-232ca94b2177" />
 *Figure 24. Endpoint isolation. The affected corp-dc01 endpoint was isolated using Microsoft Defender for Endpoint to restrict network communication and prevent additional remote activity while containment and remediation actions were performed.*
 
+<br><br>
 <img width="1643" height="418" alt="NSG" src="https://github.com/user-attachments/assets/d937a456-09d8-434d-b676-21de095d3fdf" />
 *Figure 25. Network and MySQL service containment. The Azure Network Security Group was restored to its original restrictive configuration following the investigation. Permissive inbound access used during the controlled exposure was removed, including public access to the MySQL service on TCP port 3306, reducing the external attack surface and preventing additional unauthorized connections.*
 
-### [ ] Investigation Package
+<br><br>
+### Post-Isolation Evidence Collection
+
+| Field | Value |
+|---|---|
+| Device | `CORP-DC01` |
+| Isolation time | `2026-08-11T16:37:48Z` |
+| Collection started | `2026-08-11T22:10:27Z` |
+| Collection completed | `2026-08-11T22:10:52Z` |
+| Time after isolation | Approximately 5 hours 33 minutes |
+| Collection status | 80 of 80 collection actions completed |
+| Package contents | 295 files |
+| Package size | Approximately 19.3 MiB |
+| Evidence collected | Processes, network connections, services, scheduled tasks, registry autoruns, installed programs, users and groups, prefetch files, temporary directories, and Windows Security events |
+
+**Investigation-package SHA-256:**
+
+`0cd9e713f45169e0e40e7e3bb078b42b71fa547c214162c4954d97d945560a89`
+
+### Post-Isolation Validation
+
+| Evidence source | Observation | Assessment |
+|---|---|---|
+| Network connections | No established external RDP or MySQL sessions were present during collection. | Consistent with successful network containment. |
+| Allowed connectivity | Only expected outbound HTTPS connections associated with Microsoft Defender and Windows services remained active. | Endpoint management and security telemetry remained available while isolated. |
+| Listening services | MySQL ports `3306` and `33060`, along with RDP port `3389`, remained listening locally. | Isolation restricted communication but did not remediate the exposed services. |
+| Process snapshot | No Octo Browser, OpenOffice, or interactive attacker shell was active during collection. MySQL remained running. | No known attacker tooling was active at that moment; this does not establish that the host was clean. |
+| Residual artifacts | Octo Browser remained installed with an install date of August 1, 2026. OpenOffice remained installed with an install date of August 8, 2026. | Previously identified post-compromise software remained on the endpoint. |
+| Execution evidence | BAM registry and prefetch artifacts recorded execution of Octo Browser, the OpenOffice installer, OpenOffice, PowerShell, and command-line utilities. | Corroborates endpoint activity identified during Phase 7. |
+| Persistence review | No obvious unauthorized service, scheduled task, or startup Run key was identified in the collected snapshot. | Persistence was not confirmed through these mechanisms. |
+| Accounts | `administrator` and `joedizon` remained members of the local Administrators group. | Privileged-account exposure still required remediation. |
+| Active sessions | No interactive user or SMB session was active during collection. | No active remote user or SMB lateral-movement session was observed at capture time. |
+| Evidence gap | The Windows Firewall log (`pfirewall.log`) was unavailable. | Host-firewall telemetry could not be validated from the package. |
+
+### Containment Assessment
+
+The post-isolation investigation package contained no active external RDP, MySQL, or SMB session at the time of collection, which is consistent with successful network containment. However, MySQL and RDP remained listening, privileged accounts remained present, and previously identified software and execution artifacts were still stored on the endpoint.
+
+Therefore, containment reduced the immediate risk but did not return the system to a trusted state. Removal of residual artifacts, account hardening, firewall restoration, MySQL hardening, and database recovery were carried forward into Phase 9.
 
 ---
 
