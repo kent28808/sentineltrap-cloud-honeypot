@@ -96,9 +96,9 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 ## 🏗️ Architecture
 
-<img width="1536" height="1024" alt="Honeypotarch" src="https://github.com/user-attachments/assets/43c1ffca-7429-420a-9010-036792c235f9" />
+<img width="1672" height="941" alt="diagram" src="https://github.com/user-attachments/assets/947b602a-b426-404a-8a78-e6ec58539fc4" />
 
-*Figure 1. High-level architecture of the Azure SOC honeypot, showing the Windows virtual machine, centralized telemetry collection through Azure Monitor Agent and Microsoft Sentinel, GeoIP enrichment, attack visualization, and security monitoring and detection workflows.*
+*Figure 1. High-level architecture of the Azure SOC honeypot. MySQL general-log telemetry was forwarded through Azure Monitor Agent and a Data Collection Rule to Azure Log Analytics and Microsoft Sentinel, while Windows endpoint telemetry was collected separately by Microsoft Defender for Endpoint. Evidence from the two telemetry paths was correlated during the investigation.*
 
 The environment consists of:
 
