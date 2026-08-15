@@ -214,14 +214,13 @@ Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (
 - Failed MySQL Authentication
 - Database Query Monitoring
 
-<img width="1572" height="1264" alt="Analytics" src="https://github.com/user-attachments/assets/45dbac82-fb65-4191-a917-b843082d3bd1" />
-
+<img width="1639" height="1208" alt="10r1" src="https://github.com/user-attachments/assets/81a46e6d-50bd-4516-893e-fe647080b62b" />
 *Figure 10. Microsoft Sentinel analytics rule designed to detect successful Windows logons to the honeypot, using Defender endpoint telemetry and KQL to identify Administrator and Guest account activity.*
 
 <br><br>
-<img width="1423" height="665" alt="11r1" src="https://github.com/user-attachments/assets/ec9b70e2-17c5-4521-9e36-c22e1e9a8825" />. 
-
+<img width="1423" height="665" alt="11r1" src="https://github.com/user-attachments/assets/ec9b70e2-17c5-4521-9e36-c22e1e9a8825" />   
 *Figure 11. KQL validation of the Microsoft Sentinel MySQL authentication rule, classifying successful and failed connection attempts in `MySQLAudit_CL` and extracting the associated username and source host.*
+
 ---
 <a name="phase-5"></a>
 
