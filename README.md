@@ -195,7 +195,8 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest the My
 *Figure 8. Azure Monitor Agent successfully installed on the Windows honeypot VM, providing the telemetry collection mechanism used to forward the MySQL general query log to Azure Log Analytics.*
 <br><br>
 
-<img width="1188" height="981" alt="mysqlaudi" src="https://github.com/user-attachments/assets/1ca56ebe-862a-4351-a61b-c3c6ac691e18" />
+<img width="1188" height="981" alt="mysqlaudi" src="https://github.com/user-attachments/assets/1ca56ebe-862a-4351-a61b-c3c6ac691e18" />  
+
 *Figure 9. MySQL general-log telemetry in the `MySQLAudit_CL` custom table, confirming successful ingestion of connection and SQL-statement records from the honeypot VM through Azure Monitor Agent and the configured Data Collection Rule.*
 
 ---
@@ -213,7 +214,8 @@ Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (
 - Failed MySQL Authentication
 - Database Query Monitoring
 
-<img width="1639" height="1208" alt="10r1" src="https://github.com/user-attachments/assets/81a46e6d-50bd-4516-893e-fe647080b62b" />
+<img width="1639" height="1208" alt="10r1" src="https://github.com/user-attachments/assets/81a46e6d-50bd-4516-893e-fe647080b62b" />  
+
 *Figure 10. Microsoft Sentinel analytics rule designed to detect successful Windows logons to the honeypot, using Defender endpoint telemetry and KQL to identify Administrator and Guest account activity.*
 
 <br><br>
@@ -267,7 +269,8 @@ Monitored attacker activity using Microsoft Defender and Microsoft Sentinel afte
 - NTANetAnalytics
 - MySQLAudit_CL
 
-<img width="1462" height="1221" alt="incident" src="https://github.com/user-attachments/assets/6eb4de7d-36c3-46ea-ad37-ca8ad70f01d2" />
+<img width="1462" height="1221" alt="incident" src="https://github.com/user-attachments/assets/6eb4de7d-36c3-46ea-ad37-ca8ad70f01d2" />  
+
 *Figure 15. Microsoft Sentinel incident generated from honeypot telemetry, demonstrating detection of suspicious authentication activity following controlled exposure of the Windows environment.*
 
 <br><br>
@@ -299,7 +302,8 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 - Discovery
 - Collection
 
-<img width="1501" height="1168" alt="19" src="https://github.com/user-attachments/assets/167e9661-ad39-40cc-8032-5ae1f886ce51" />
+<img width="1501" height="1168" alt="19" src="https://github.com/user-attachments/assets/167e9661-ad39-40cc-8032-5ae1f886ce51" />  
+
 *Figure 19. Microsoft Defender Advanced Hunting authentication activity using a focused hunt window beginning `2026-07-31T18:44:02Z`, when authentication-event volume increased. This hunt start is separate from the original VM exposure time of `2026-07-30T18:44:02Z`.*
 
 <br><br>
@@ -352,7 +356,8 @@ After confirming unauthorized endpoint and database activity, `corp-dc01` was is
 
 **Isolation timestamp:** `2026-08-11T16:37:48Z`
 
-<img width="1555" height="943" alt="isolation" src="https://github.com/user-attachments/assets/89dc17c9-b586-48e9-a1c2-232ca94b2177" />
+<img width="1555" height="943" alt="isolation" src="https://github.com/user-attachments/assets/89dc17c9-b586-48e9-a1c2-232ca94b2177" /> 
+
 *Figure 24. Endpoint isolation. The affected corp-dc01 endpoint was isolated using Microsoft Defender for Endpoint to restrict network communication and prevent additional remote activity while containment and remediation actions were performed.*
 
 <br><br>
@@ -422,7 +427,8 @@ In a production environment, reimaging the host from a known-good source would p
 - Validated that security controls remained enabled following recovery
 
 
-<img width="1671" height="977" alt="firewall" src="https://github.com/user-attachments/assets/9e146856-c3cc-4791-9b35-2d28155a47d4" />
+<img width="1671" height="977" alt="firewall" src="https://github.com/user-attachments/assets/9e146856-c3cc-4791-9b35-2d28155a47d4" />  
+
 *Figure 26. Security controls restored following containment. All three Windows Defender Firewall profiles were enabled, and the built-in Guest account was disabled.*
 
 <br><br>
@@ -481,7 +487,8 @@ A Microsoft Sentinel Workbook and source-IP geolocation enrichment were used to 
 
 Larger bubbles represent locations associated with a higher number of recorded authentication events. Geographic coordinates are derived from IP-geolocation enrichment and should be interpreted as approximate network regions—not the physical locations of individual attackers.
 
-<img width="1187" height="585" alt="map" src="https://github.com/user-attachments/assets/9530bee1-3d43-4948-970c-d44023c24889" />
+<img width="1187" height="585" alt="map" src="https://github.com/user-attachments/assets/9530bee1-3d43-4948-970c-d44023c24889" />  
+
 *Figure 29. Microsoft Sentinel Workbook showing the approximate geographic distribution of public authentication activity observed against the Windows VM and MySQL service. Bubble size represents the number of recorded events associated with each location.*
 
 
