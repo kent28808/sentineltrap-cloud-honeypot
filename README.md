@@ -10,8 +10,8 @@
 
 ## 📑 Table of Contents
 
-- [Incident at a Glance](#incident-at-a-glance)
 - [Overview](#overview)
+- [Incident at a Glance](#incident-at-a-glance)
 - [Objectives](#objectives)
 - [Technologies Used](#technologies-used)
 - [Architecture](#architecture)
@@ -33,6 +33,17 @@
 - [MITRE ATT&CK Mapping](#mitre-attack-mapping)
 
 ---
+<a name="overview"></a>
+
+## 📖 Overview
+
+This project demonstrates the complete lifecycle of detecting and responding to a real-world cyber attack in Microsoft Azure. A Windows 11 virtual machine hosting a MySQL database was intentionally hardened, instrumented for telemetry, and then deliberately weakened and exposed to the public internet to attract malicious activity.
+
+Using Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and Azure Log Analytics, I collected telemetry, built custom detection rules, investigated attacker behavior, contained the compromise, and documented the incident.
+
+Unlike a traditional honeypot demonstration, this project emphasizes the complete defensive workflow from secure deployment and detection engineering to threat hunting, incident response, and recovery.
+
+---
 <a name="incident-at-a-glance"></a>
 
 ## 🚨 Incident at a Glance
@@ -49,17 +60,6 @@
 | Final reports | [Incident Response Report](./assets/SecurityIncidentReport.pdf) · [Host DFIR Report](./assets/HostDFIRReport.pdf) |
 
 [Back to top](#readme-top)
-
----
-<a name="overview"></a>
-
-## 📖 Overview
-
-This project demonstrates the complete lifecycle of detecting and responding to a real-world cyber attack in Microsoft Azure. A Windows 11 virtual machine hosting a MySQL database was intentionally hardened, instrumented for telemetry, and then deliberately weakened and exposed to the public internet to attract malicious activity.
-
-Using Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and Azure Log Analytics, I collected telemetry, built custom detection rules, investigated attacker behavior, contained the compromise, and documented the incident.
-
-Unlike a traditional honeypot demonstration, this project emphasizes the complete defensive workflow from secure deployment and detection engineering to threat hunting, incident response, and recovery.
 
 ---
 <a name="objectives"></a>
@@ -115,13 +115,16 @@ Telemetry from both Windows and MySQL is centralized into Azure Log Analytics, w
 
 ---
 
-# 🔄 Project Workflow
+<a name="project-workflow"></a>
 
-## Phase 1: Build & Harden
+## 🔄 Project Workflow
 
+<a name="phase-1"></a>
+
+### Phase 1: Build & Harden
 A Windows virtual machine was deployed in Azure with Microsoft Defender for Endpoint onboarded while inbound internet access remained blocked.
 
-### Tasks Completed
+#### Tasks Completed
 
 - Created Windows 11 VM
 - Configured Public IP
@@ -144,12 +147,13 @@ A Windows virtual machine was deployed in Azure with Microsoft Defender for Endp
 *Figure 4. Microsoft Defender Advanced Hunting DeviceInfo results validating telemetry from the Windows 11 honeypot and confirming the endpoint's identity and operating system information.*
 
 ---
+<a name="phase-2"></a>
 
-## Phase 2: Configure MySQL
+### Phase 2: Configure MySQL
 
 Installed MySQL Community Server and populated a sample corporate database. Enabled general query logging and authentication logging to capture all database activity.
 
-### Tasks Completed
+#### Tasks Completed
 
 - Installed MySQL
 - Imported sample database
@@ -167,12 +171,13 @@ Installed MySQL Community Server and populated a sample corporate database. Enab
 *Figure 6. mysql_general.log capturing authentication and query activity generated during database validation, confirming that database events were being recorded for subsequent security monitoring and centralized log collection.*
 
 ---
+<a name="phase-3"></a>
 
-## Phase 3: Centralize Logging
+### Phase 3: Centralize Logging
 
 Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL audit logs into Azure Log Analytics.
 
-### Tasks Completed
+#### Tasks Completed
 
 - Installed Azure Monitor Agent
 - Created Data Collection Rule
@@ -187,8 +192,7 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL 
 
 <img width="1675" height="941" alt="Azureagent" src="https://github.com/user-attachments/assets/d3f9c324-5152-48eb-847e-a3d5178aa370" />
 
-*Figure 8\. Azure Monitor Agent successfully installed on the Windows honeypot VM, providing the telemetry collection mechanism used to forward MySQL audit logs to Azure Log Analytics.*
-
+*Figure 8. Azure Monitor Agent successfully installed on the Windows honeypot VM, providing the telemetry collection mechanism used to forward the MySQL general query log to Azure Log Analytics.*
 <br><br>
 
 <img width="1188" height="981" alt="mysqlaudi" src="https://github.com/user-attachments/assets/1ca56ebe-862a-4351-a61b-c3c6ac691e18" />
@@ -196,12 +200,13 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL 
 *Figure 9. MySQLAudit_CL telemetry in Azure Log Analytics confirming successful ingestion of MySQL authentication and query events from the honeypot VM through Azure Monitor Agent and the configured Data Collection Rule.*
 
 ---
+<a name="phase-4"></a>
 
-## Phase 4: Detection Engineering
+### Phase 4: Detection Engineering
 
 Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (KQL) to detect suspicious authentication activity.
 
-### Detection Rules
+#### Detection Rules
 
 - Windows Administrator Logon
 - Windows Guest Logon
@@ -214,16 +219,17 @@ Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (
 *Figure 10. Microsoft Sentinel analytics rule designed to detect successful Windows logons to the honeypot, using Defender endpoint telemetry and KQL to identify Administrator and Guest account activity.*
 
 <br><br>
-<img width="1423" height="665" alt="11r1" src="https://github.com/user-attachments/assets/ec9b70e2-17c5-4521-9e36-c22e1e9a8825" />
-*Figure 11. KQL validation of MySQL authentication telemetry in `MySQLAudit_CL`, correlating connection records by connection ID and event time to accurately distinguish successful and failed root authentication attempts from `64.89.163.79`. Microsoft Defender displays the parsed datetime in Pacific Time, while the raw `EventText` timestamps remain in UTC.*
+<img width="1423" height="665" alt="11r1" src="https://github.com/user-attachments/assets/ec9b70e2-17c5-4521-9e36-c22e1e9a8825" />. 
 
+*Figure 11. KQL validation of the Microsoft Sentinel MySQL authentication rule, classifying successful and failed connection attempts in `MySQLAudit_CL` and extracting the associated username and source host.*
 ---
+<a name="phase-5"></a>
 
-## Phase 5: Controlled Exposure
+### Phase 5: Controlled Exposure
 
 After validating detections, the environment was intentionally weakened and exposed to the public internet to attract real attacker traffic.
 
-### Security Controls Modified
+#### Security Controls Modified
 
 - Enabled Administrator account
 - Enabled Guest account
@@ -247,12 +253,13 @@ The exposure timestamp was documented to measure the time-to-compromise: 2026-07
 *Figure 14. Windows Defender Firewall intentionally disabled as part of the controlled exposure phase, removing a host-level network control to increase the honeypot's visibility and attack surface.*
 
 ---
+<a name="phase-6"></a>
 
-## Phase 6: Threat Detection
+### Phase 6: Threat Detection
 
 Monitored attacker activity using Microsoft Defender and Microsoft Sentinel after exposing the environment.
 
-### Data Sources
+#### Data Sources
 
 - DeviceLogonEvents
 - DeviceProcessEvents
@@ -278,12 +285,13 @@ Monitored attacker activity using Microsoft Defender and Microsoft Sentinel afte
 *Figure 18. MySQL query telemetry collected in MySQLAudit_CL following authentication, providing visibility into database activity performed against the honeypot and supporting post-compromise investigation.*
 
 ---
+<a name="phase-7"></a>
 
-## Phase 7: Incident Investigation
+### Phase 7: Incident Investigation
 
 Investigated attacker behavior by correlating endpoint telemetry with database activity.
 
-### Investigation Focus
+#### Investigation Focus
 
 - Initial Access
 - Authentication Attempts
@@ -298,12 +306,27 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 
 <br><br>
 <img width="1289" height="1220" alt="20" src="https://github.com/user-attachments/assets/c9aa42de-d404-44ef-89cb-88cd2c5844e4" />
-*Figure 20. Defender process tree investigation. The process tree shows Octo Browser.exe spawning powershell.exe on the affected endpoint. The PowerShell command queried Win32_ComputerSystemProduct to retrieve the system UUID, representing system-information discovery activity identified during the incident investigation.*
+*Figure 20. Microsoft Defender process-tree investigation showing Octo Browser spawning PowerShell. The PowerShell command queried `Win32_ComputerSystemProduct` to retrieve the system UUID, behavior consistent with MITRE ATT&CK System Information Discovery (T1082). Portal timestamps are displayed in local time.*
 
 <br><br>
-## 📊 Attack Timeline
-<img width="1584" height="1181" alt="21" src="https://github.com/user-attachments/assets/a3264006-5844-4646-a57a-1c1b4a202a76" />
-*Figure 21. Defender device timeline investigation. The corp-dc01 device timeline was reviewed to establish the chronological sequence of endpoint activity surrounding the observed PowerShell execution.*
+<a name="attack-timeline"></a>
+
+#### 📊 Attack Timeline
+
+| Timestamp (UTC) | Phase | Observed Activity |
+|---|---|---|
+| `2026-07-30 18:44:02` | Controlled exposure | The documented exposure and incident-analysis window began. |
+| `2026-07-31 01:36:02` | Initial database access | External source `64.89.163.79` successfully authenticated to MySQL as `root`. |
+| `2026-07-31 01:36:12–01:36:28` | Discovery and collection | The session enumerated databases and accessed the `credentials`, `customers`, `orders`, and `payments` tables. |
+| `2026-07-31 01:36:27–01:38:00` | Destructive impact | Tables and databases were deleted, and a `RECOVER_YOUR_DATA` ransom artifact was created. |
+| `2026-07-31 18:13:35` | Endpoint access | The first confirmed external `RemoteInteractive` Administrator logon was recorded. |
+| `2026-08-01 23:04:26–23:17:36` | Post-access activity | An external Administrator session was followed by Octo Browser installation, creation of a Defender exclusion, and outbound Octo-related traffic. |
+| `2026-08-01–2026-08-11` | Recurring activity | Additional root-authenticated destructive MySQL sessions were observed from rotating external sources. |
+| `2026-08-11 16:37:48` | Containment | `corp-dc01` was isolated through Microsoft Defender for Endpoint. |
+<br><br>
+<img width="1584" height="1181" alt="Microsoft Defender device timeline showing Octo Browser and PowerShell activity on corp-dc01" src="https://github.com/user-attachments/assets/a3264006-5844-4646-a57a-1c1b4a202a76" />
+
+*Figure 21. Microsoft Defender device timeline showing the sequence of Octo Browser, PowerShell, file, and network activity associated with the investigated Administrator session. Portal timestamps are displayed in local time.*
 
 <br><br>
 <img width="1489" height="1169" alt="22" src="https://github.com/user-attachments/assets/310dde26-d1cc-4353-965d-3df3d06490f7" />
@@ -314,12 +337,13 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 *Figure 23. Network activity investigation. Microsoft Defender network telemetry was reviewed to identify connections associated with the affected endpoint and correlate network activity with the MySQL compromise. Particular attention was given to connections involving the remote host 64.89.163.79 and MySQL service traffic observed during the destructive database activity.*
 
 ---
+<a name="phase-8"></a>
 
-## Phase 8: Containment
+### Phase 8: Containment
 
 After confirming unauthorized endpoint and database activity, `CORP-DC01` was isolated using Microsoft Defender for Endpoint to prevent further attacker communication while preserving the system for forensic collection.
 
-### Actions Performed
+#### Actions Performed
 
 - Isolated `CORP-DC01` through Microsoft Defender for Endpoint.
 - Kept the VM powered on to preserve volatile and forensic evidence.
@@ -328,7 +352,7 @@ After confirming unauthorized endpoint and database activity, `CORP-DC01` was is
 - Collected a post-isolation Microsoft Defender investigation package.
 - Recorded the isolation and evidence-collection timestamps for timeline correlation.
 
-#### Isolation timestamp: `2026-08-11T16:37:48.0000000Z`
+**Isolation timestamp:** `2026-08-11T16:37:48Z`
 
 <img width="1555" height="943" alt="isolation" src="https://github.com/user-attachments/assets/89dc17c9-b586-48e9-a1c2-232ca94b2177" />
 *Figure 24. Endpoint isolation. The affected corp-dc01 endpoint was isolated using Microsoft Defender for Endpoint to restrict network communication and prevent additional remote activity while containment and remediation actions were performed.*
@@ -338,7 +362,7 @@ After confirming unauthorized endpoint and database activity, `CORP-DC01` was is
 *Figure 25. Network and MySQL service containment. The Azure Network Security Group was restored to its original restrictive configuration following the investigation. Permissive inbound access used during the controlled exposure was removed, including public access to the MySQL service on TCP port 3306, reducing the external attack surface and preventing additional unauthorized connections.*
 
 <br><br>
-### Post-Isolation Evidence Collection
+#### Post-Isolation Evidence Collection
 
 | Field | Value |
 |---|---|
@@ -356,7 +380,7 @@ After confirming unauthorized endpoint and database activity, `CORP-DC01` was is
 
 `0cd9e713f45169e0e40e7e3bb078b42b71fa547c214162c4954d97d945560a89`
 
-### Post-Isolation Validation
+#### Post-Isolation Validation
 
 | Evidence source | Observation | Assessment |
 |---|---|---|
@@ -371,28 +395,29 @@ After confirming unauthorized endpoint and database activity, `CORP-DC01` was is
 | Active sessions | No interactive user or SMB session was active during collection. | No active remote user or SMB lateral-movement session was observed at capture time. |
 | Evidence gap | The Windows Firewall log (`pfirewall.log`) was unavailable. | Host-firewall telemetry could not be validated from the package. |
 
-### Containment Assessment
+#### Containment Assessment
 
 The post-isolation investigation package contained no active external RDP, MySQL, or SMB session at the time of collection, which is consistent with successful network containment. However, MySQL and RDP remained listening, privileged accounts remained present, and previously identified software and execution artifacts were still stored on the endpoint.
 
 Therefore, containment reduced the immediate risk but did not return the system to a trusted state. Removal of residual artifacts, account hardening, firewall restoration, MySQL hardening, and database recovery were carried forward into Phase 9.
 
 ---
+<a name="phase-9"></a>
 
-## Phase 9: Eradication and Recovery
+### Phase 9: Eradication and Recovery
 
 Following containment, the compromised environment was remediated and restored to a secure operational state.
 
 In a production environment, rebuilding a compromised endpoint from a known-good image would generally provide greater assurance than attempting to clean an affected system in place. For this lab, the existing VM was retained so that remediation, hardening, and recovery procedures could be demonstrated.
 
-### Eradication Actions
+#### Eradication Actions
 - Hardened the Administrator account
 - Disabled the Guest account
 - Secured exposed administrative credentials
 - Run a full malware scan using Windows Defender
 - Verified that unnecessary remote administrative access was disabled
 
-### Recovery Actions
+#### Recovery Actions
 - Re-enabled Windows Defender Firewall
 - Restored the affected MySQL database from backup
 - Verified that the expected databases and tables were available
@@ -401,18 +426,20 @@ In a production environment, rebuilding a compromised endpoint from a known-good
 
 
 <img width="1671" height="977" alt="firewall" src="https://github.com/user-attachments/assets/9e146856-c3cc-4791-9b35-2d28155a47d4" />
-*Figure 26. Security controls restored. Windows Defender Firewall and other endpoint security controls were restored following containment, while administrative access and credentials were hardened as part of eradication.*
+*Figure 26. Security controls restored following containment. All three Windows Defender Firewall profiles were enabled, and the built-in Guest account was disabled.*
 
 <br><br>
 <img width="1215" height="946" alt="antivirus" src="https://github.com/user-attachments/assets/9caa394f-639b-4e1b-a752-f5913d9e4010" />
-*Figure 27. Post-containment malware scan. A full Microsoft Defender Antivirus scan was initiated on corp-dc01 following containment to identify potential malware or other malicious artifacts before the endpoint was returned to normal operation.*
+*Figure 27. Post-containment malware scan initiated on `corp-dc01` using Microsoft Defender Antivirus to identify potential malware and other suspicious artifacts.*
 
 <br><br>
 <img width="1395" height="1239" alt="sql" src="https://github.com/user-attachments/assets/23dd5a07-df18-4c05-9870-d72d81016ca7" />
-*Figure 28. MySQL database recovery. The affected kt_corp database was restored to a known-good state following destructive database activity, and the expected application tables were verified as present and operational.*
+*Figure 28. MySQL database recovery validation showing the restored `kt_corp` schema, expected application tables, successful table checks, and accessible sample records.*
 
 ---
-# Phase 10: Incident Reporting and Forensic Analysis
+<a name="phase-10"></a>
+
+### Phase 10: Incident Reporting and Forensic Analysis
 
 Following containment, eradication, and recovery, endpoint, network, authentication, and database telemetry were correlated to reconstruct the incident and document its scope, impact, and response.
 
@@ -430,16 +457,17 @@ The reporting package covers:
 - Lessons learned and security recommendations
 
 ---
+<a name="final-reports"></a>
 
-## 📄 Final Reports
+#### 📄 Final Reports
 
-### Incident Response Report
+##### Incident Response Report
 
 The primary incident report presents the complete investigation of the exposed Azure environment. It correlates Microsoft Defender, Sentinel, Windows authentication, network, and MySQL telemetry to explain the attack sequence, affected resources, investigation findings, containment actions, recovery process, and recommended security improvements.
 
 📄 **[View the Incident Response Report (PDF)](./assets/SecurityIncidentReport.pdf)**
 
-### Host DFIR Report
+##### Host DFIR Report
 
 The Host Digital Forensics and Incident Response report provides a focused forensic examination of the affected Windows VM. It compares Microsoft Defender for Endpoint investigation packages collected at different stages of the incident and evaluates changes involving processes, persistence mechanisms, services, scheduled tasks, user accounts, network connections, event logs, and file-system artifacts.
 
@@ -448,8 +476,9 @@ Findings are classified as benign or suspicious and mapped to relevant MITRE ATT
 📄 **[View the Host DFIR Report (PDF)](./assets/HostDFIRReport.pdf)**
 
 ---
+<a name="geographic-attack-analysis"></a>
 
-## 🌍 Geographic Attack Analysis
+#### 🌍 Geographic Attack Analysis
 
 A Microsoft Sentinel Workbook and source-IP geolocation enrichment were used to visualize the approximate geographic origins of public authentication activity observed against the `corp-dc01` Windows VM and its MySQL service during the exposure period.
 
@@ -460,7 +489,9 @@ Larger bubbles represent locations associated with a higher number of recorded a
 
 
 ---
-# 📈 Skills Demonstrated
+<a name="skills-demonstrated"></a>
+
+## 📈 Skills Demonstrated
 
 - Microsoft Sentinel
 - Microsoft Defender for Endpoint
@@ -478,16 +509,18 @@ Larger bubbles represent locations associated with a higher number of recorded a
 - Cloud Security
 
 ---
+<a name="key-takeaways"></a>
 
-# 💡 Key Takeaways
+## 💡 Key Takeaways
 
 This project demonstrates an end-to-end Security Operations Center (SOC) workflow. Rather than simply deploying a vulnerable system, the project emphasizes designing detections before exposure, collecting telemetry from multiple sources, investigating real attacker behavior, and performing containment and recovery using Microsoft Defender and Microsoft Sentinel.
 
 The lab provided practical experience with cloud security monitoring, detection engineering, incident response, and threat hunting in a Microsoft security environment.
 
 ---
+<a name="mitre-attack-mapping"></a>
 
-# 📚 MITRE ATT&CK Mapping
+## 📚 MITRE ATT&CK Mapping
 
 | Tactic | Technique | Supporting Evidence |
 |---|---|---|
