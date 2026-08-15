@@ -1,8 +1,57 @@
+<a name="readme-top"></a>
+
 # 🛡️ SentinelTrap – Azure Honeypot Detection & Incident Response Lab
 
 > **An end-to-end Microsoft Azure cyber range that simulates a real-world compromise of an internet-facing Windows server, leveraging Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and MySQL audit logging to detect, investigate, and respond to attacker activity.**
 
 ---
+
+<a name="table-of-contents"></a>
+
+## 📑 Table of Contents
+
+- [Incident at a Glance](#incident-at-a-glance)
+- [Overview](#overview)
+- [Objectives](#objectives)
+- [Technologies Used](#technologies-used)
+- [Architecture](#architecture)
+- [Project Workflow](#project-workflow)
+  - [Phase 1: Build & Harden](#phase-1)
+  - [Phase 2: Configure MySQL](#phase-2)
+  - [Phase 3: Centralize Logging](#phase-3)
+  - [Phase 4: Detection Engineering](#phase-4)
+  - [Phase 5: Controlled Exposure](#phase-5)
+  - [Phase 6: Threat Detection](#phase-6)
+  - [Phase 7: Incident Investigation](#phase-7)
+  - [Phase 8: Containment](#phase-8)
+  - [Phase 9: Eradication and Recovery](#phase-9)
+  - [Phase 10: Incident Reporting and Forensic Analysis](#phase-10)
+    - [Final Reports](#final-reports)
+    - [Geographic Attack Analysis](#geographic-attack-analysis)
+- [Skills Demonstrated](#skills-demonstrated)
+- [Key Takeaways](#key-takeaways)
+- [MITRE ATT&CK Mapping](#mitre-attack-mapping)
+
+---
+<a name="incident-at-a-glance"></a>
+
+## 🚨 Incident at a Glance
+
+| Category | Finding |
+|---|---|
+| Exposure window | `2026-07-30T18:44:02Z` through `2026-08-11T16:37:48Z` |
+| Affected asset | `corp-dc01` — Windows 11 Azure VM hosting MySQL |
+| First confirmed database access | MySQL `root` authentication from `64.89.163.79` at `2026-07-31T01:36:02Z` |
+| Database impact | Enumeration and reading of corporate tables, destructive `DROP TABLE` and `DROP DATABASE` operations, and creation of a Bitcoin ransom note |
+| Endpoint activity | Successful external Administrator logons, Octo Browser installation, PowerShell-based system discovery, a Microsoft Defender exclusion, and outbound Octo-related traffic |
+| Containment | Endpoint isolation through Microsoft Defender for Endpoint, removal of permissive NSG access, and post-isolation forensic collection |
+| Recovery | Windows Firewall restored, Guest account disabled, and the `kt_corp` database restored and validated |
+| Final reports | [Incident Response Report](./assets/SecurityIncidentReport.pdf) · [Host DFIR Report](./assets/HostDFIRReport.pdf) |
+
+[Back to top](#readme-top)
+
+---
+<a name="overview"></a>
 
 ## 📖 Overview
 
@@ -13,6 +62,7 @@ Using Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and Az
 Unlike a traditional honeypot demonstration, this project emphasizes the complete defensive workflow from secure deployment and detection engineering to threat hunting, incident response, and recovery.
 
 ---
+<a name="objectives"></a>
 
 ## 🎯 Objectives
 
@@ -27,6 +77,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 - Produce an end-to-end incident report
 
 ---
+<a name="technologies-used"></a>
 
 ## 🛠️ Technologies Used
 
@@ -43,6 +94,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 | Database Language | SQL |
 
 ---
+<a name="architecture"></a>
 
 ## 🏗️ Architecture
 
@@ -162,9 +214,8 @@ Developed custom Microsoft Sentinel Analytics Rules using Kusto Query Language (
 *Figure 10. Microsoft Sentinel analytics rule designed to detect successful Windows logons to the honeypot, using Defender endpoint telemetry and KQL to identify Administrator and Guest account activity.*
 
 <br><br>
-<img width="1200" height="989" alt="rule2" src="https://github.com/user-attachments/assets/fb30117b-4d25-4069-828e-95d8d59a0b27" />
-
-*Figure 11. Microsoft Sentinel analytics rule parsing MySQLAudit_CL telemetry to identify and distinguish successful and failed MySQL authentication attempts, including the associated username and source IP address.*
+<img width="1423" height="665" alt="11r1" src="https://github.com/user-attachments/assets/ec9b70e2-17c5-4521-9e36-c22e1e9a8825" />
+*Figure 11. KQL validation of MySQL authentication telemetry in `MySQLAudit_CL`, correlating connection records by connection ID and event time to accurately distinguish successful and failed root authentication attempts from `64.89.163.79`. Microsoft Defender displays the parsed datetime in Pacific Time, while the raw `EventText` timestamps remain in UTC.*
 
 ---
 
@@ -438,33 +489,14 @@ The lab provided practical experience with cloud security monitoring, detection 
 
 # 📚 MITRE ATT&CK Mapping
 
-| Tactic | Technique |
-|---------|-----------|
-| Initial Access | Valid Accounts (T1078) |
-| Credential Access | Brute Force (T1110) |
-| Discovery | System Information Discovery (T1082) |
-| Discovery | Account Discovery (T1033) |
-| Collection | Data from Local System (T1005) |
-| Command & Control | Network Connections (Observed) |
+| Tactic | Technique | Supporting Evidence |
+|---|---|---|
+| Credential Access | T1110 – Brute Force | Repeated failed authentication attempts and account lockouts |
+| Initial Access | T1078.003 – Valid Accounts: Local Accounts | Successful external use of the local Administrator account |
+| Initial Access | T1133 – External Remote Services | Confirmed external RemoteInteractive/RDP sessions |
+| Discovery | T1082 – System Information Discovery | PowerShell queried `Win32_ComputerSystemProduct` for the system UUID |
+| Collection | T1213.006 – Data from Information Repositories: Databases | `SELECT` activity against `kt_corp` tables |
+| Defense Evasion | T1562.001 – Impair Defenses | Defender exclusion added for the Octo Browser directory |
+| Impact | T1485 – Data Destruction | Confirmed `DROP TABLE` and `DROP DATABASE` operations |
 
 ---
-
-# 📂 Repository Structure
-
-```
-SentinelTrap-Cloud-Honeypot-Lab/
-│
-├── images/
-├── kql/
-├── queries/
-├── reports/
-├── screenshots/
-├── README.md
-└── LICENSE
-```
-
----
-
-# 🙏 Acknowledgements
-
-This project was completed as part of a cloud cybersecurity capstone focused on Microsoft Sentinel, Microsoft Defender for Endpoint, threat hunting, and incident response.
