@@ -2,7 +2,7 @@
 
 # 🛡️ SentinelTrap – Azure Honeypot Detection & Incident Response Lab
 
-> **An end-to-end Microsoft Azure cyber range that simulates a real-world compromise of an internet-facing Windows server, leveraging Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and MySQL audit logging to detect, investigate, and respond to attacker activity.**
+> **An end-to-end Microsoft Azure cyber range that simulates a real-world compromise of an internet-facing Windows server, leveraging Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and MySQL general query logging to detect, investigate, and respond to attacker activity.**
 
 ---
 
@@ -65,7 +65,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 ## 🎯 Objectives
 
 - Deploy an internet-facing Windows virtual machine
-- Configure MySQL audit logging
+- Configure database activity logging using the MySQL general log
 - Centralize endpoint and database telemetry
 - Build custom Microsoft Sentinel analytics rules
 - Detect real-world attacker activity
@@ -151,7 +151,7 @@ A Windows virtual machine was deployed in Azure with Microsoft Defender for Endp
 
 ### Phase 2: Configure MySQL
 
-Installed MySQL Community Server and populated a sample corporate database. Enabled general query logging and authentication logging to capture all database activity.
+Installed MySQL Community Server and populated a sample corporate database. Enabled the MySQL general query log to record client connection events and SQL statements.
 
 #### Tasks Completed
 
@@ -168,14 +168,14 @@ Installed MySQL Community Server and populated a sample corporate database. Enab
 
 <img width="1182" height="954" alt="mysql2" src="https://github.com/user-attachments/assets/a64cb0e5-3fcc-4e51-9b2c-ebec3f326138" />
 
-*Figure 6. mysql_general.log capturing authentication and query activity generated during database validation, confirming that database events were being recorded for subsequent security monitoring and centralized log collection.*
+*Figure 6. `mysql_general.log` capturing client connection events and SQL statements generated during database validation, confirming that database activity was recorded for centralized collection and subsequent security monitoring.*
 
 ---
 <a name="phase-3"></a>
 
 ### Phase 3: Centralize Logging
 
-Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL audit logs into Azure Log Analytics.
+Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest the MySQL general query log into the `MySQLAudit_CL` custom table in Azure Log Analytics.
 
 #### Tasks Completed
 
@@ -196,8 +196,7 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest MySQL 
 <br><br>
 
 <img width="1188" height="981" alt="mysqlaudi" src="https://github.com/user-attachments/assets/1ca56ebe-862a-4351-a61b-c3c6ac691e18" />
-
-*Figure 9. MySQLAudit_CL telemetry in Azure Log Analytics confirming successful ingestion of MySQL authentication and query events from the honeypot VM through Azure Monitor Agent and the configured Data Collection Rule.*
+*Figure 9. MySQL general-log telemetry in the `MySQLAudit_CL` custom table, confirming successful ingestion of connection and SQL-statement records from the honeypot VM through Azure Monitor Agent and the configured Data Collection Rule.*
 
 ---
 <a name="phase-4"></a>
