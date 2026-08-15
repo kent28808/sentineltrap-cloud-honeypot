@@ -186,7 +186,7 @@ Configured Azure Monitor Agent and a Data Collection Rule (DCR) to ingest the My
 
 <img width="1446" height="457" alt="dcr" src="https://github.com/user-attachments/assets/48452cd4-06d1-44ab-81c4-004d2b344c8f" />
 
-*Figure 7. Azure Monitor Data Collection Rule configured to collect the MySQL general log and forward the telemetry to the LAW-Cyber-Range Log Analytics workspace for centralized security monitoring.*
+*Figure 7. Azure Monitor Data Collection Rule overview associated with the MySQL general-log ingestion pipeline for corp-dc01 and the LAW-Cyber-Range workspace.*
 
 <br><br>
 
@@ -240,7 +240,7 @@ The exposure timestamp was documented to measure the time-to-compromise: 2026-07
 
 <img width="1046" height="415" alt="users" src="https://github.com/user-attachments/assets/52879347-d1fa-4262-8af6-3173175d45f2" />
 
-*Figure 12. Windows local account configuration showing the Administrator and Guest accounts enabled as part of the controlled honeypot exposure, creating intentionally weakened authentication controls for subsequent attack detection.*
+*Figure 12. Windows Local Users and Groups showing the built-in Administrator and Guest accounts reviewed as part of the controlled honeypot exposure configuration.*
 
 <br><br>
 <img width="1335" height="222" alt="inbound" src="https://github.com/user-attachments/assets/5e019db5-6f27-4482-a883-90ec5f06bb6e" />
@@ -328,7 +328,7 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 
 <br><br>
 <img width="1489" height="1169" alt="22" src="https://github.com/user-attachments/assets/310dde26-d1cc-4353-965d-3df3d06490f7" />
-*Figure 22. MySQL destructive query activity. MySQL audit telemetry shows the kt_corp tables being enumerated and subsequently deleted, followed by creation of a RECOVER_YOUR_DATA table containing a Bitcoin ransom demand. The sequence demonstrates destructive database activity and extortion behavior identified during the incident investigation.*
+*Figure 22. MySQL destructive query activity. MySQL general-log telemetry shows the kt_corp tables being enumerated and subsequently deleted, followed by creation of a RECOVER_YOUR_DATA table containing a Bitcoin ransom demand. The sequence demonstrates destructive database activity and extortion behavior identified during the incident investigation.*
 
 <br><br>
 <img width="1498" height="1087" alt="23" src="https://github.com/user-attachments/assets/8c425b3d-980a-4785-81eb-194f555ef82f" />
