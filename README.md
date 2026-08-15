@@ -365,23 +365,50 @@ In a production environment, rebuilding a compromised endpoint from a known-good
 
 Following containment, eradication, and recovery, endpoint, network, authentication, and database telemetry were correlated to reconstruct the incident and document its scope, impact, and response.
 
-The final incident report includes:
+The reporting package covers:
 
 - End-to-end attack timeline
-- Defender endpoint investigation
-- MySQL authentication and query analysis
+- Defender for Endpoint investigation
+- Windows and MySQL authentication analysis
+- MySQL query activity
 - Network activity analysis
 - Indicators of Compromise (IOCs)
-- Machine-level forensic comparison
+- Host-level forensic comparison
 - Containment and remediation actions
 - Recovery validation
 - Lessons learned and security recommendations
 
-📄 **[View Final Incident Report (PDF)](./reports/Incident-Response-Report.pdf)**
+---
 
+## 📄 Final Reports
+
+### Incident Response Report
+
+The primary incident report presents the complete investigation of the exposed Azure environment. It correlates Microsoft Defender, Sentinel, Windows authentication, network, and MySQL telemetry to explain the attack sequence, affected resources, investigation findings, containment actions, recovery process, and recommended security improvements.
+
+📄 **[View the Incident Response Report (PDF)](./assets/SecurityIncidentReport.pdf)**
+
+### Host DFIR Report
+
+The Host Digital Forensics and Incident Response report provides a focused forensic examination of the affected Windows VM. It compares Microsoft Defender for Endpoint investigation packages collected at different stages of the incident and evaluates changes involving processes, persistence mechanisms, services, scheduled tasks, user accounts, network connections, event logs, and file-system artifacts.
+
+Findings are classified as benign or suspicious and mapped to relevant MITRE ATT&CK tactics where supported by the evidence.
+
+📄 **[View the Host DFIR Report (PDF)](./assets/HostDFIRReport.pdf)**
 
 ---
 
+## 🌍 Geographic Attack Analysis
+
+A Microsoft Sentinel Workbook and source-IP geolocation enrichment were used to visualize the approximate geographic origins of public authentication activity observed against the `corp-dc01` Windows VM and its MySQL service during the exposure period.
+
+Larger bubbles represent locations associated with a higher number of recorded authentication events. Geographic coordinates are derived from source-IP registration data and should be interpreted as approximate network regions—not the physical locations of individual attackers.
+
+<img width="1187" height="585" alt="map" src="https://github.com/user-attachments/assets/9530bee1-3d43-4948-970c-d44023c24889" />
+*Figure 29. Microsoft Sentinel Workbook showing the approximate geographic distribution of public authentication activity observed against the Windows VM and MySQL service. Bubble size represents the number of recorded events associated with each location.*
+
+
+---
 # 📈 Skills Demonstrated
 
 - Microsoft Sentinel
