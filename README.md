@@ -301,7 +301,7 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 - Collection
 
 <img width="1501" height="1168" alt="19" src="https://github.com/user-attachments/assets/167e9661-ad39-40cc-8032-5ae1f886ce51" />
-*Figure 19. Defender Advanced Hunting authentication activity. Authentication telemetry was queried following the documented exposure timestamp to identify successful and failed logon activity, associated accounts, remote source IP addresses, and authentication protocols.*
+*Figure 19. Microsoft Defender Advanced Hunting authentication activity using a focused hunt window beginning `2026-07-31T18:44:02Z`, when authentication-event volume increased. This hunt start is separate from the original VM exposure time of `2026-07-30T18:44:02Z`.*
 
 <br><br>
 <img width="1289" height="1220" alt="20" src="https://github.com/user-attachments/assets/c9aa42de-d404-44ef-89cb-88cd2c5844e4" />
@@ -412,7 +412,7 @@ In a production environment, reimaging the host from a known-good source would p
 - Hardened the Administrator account
 - Disabled the Guest account
 - Secured exposed administrative credentials
-- Run a full malware scan using Windows Defender
+- Ran a full malware scan using Windows Defender
 - Verified that unnecessary remote administrative access was disabled
 
 #### Recovery Actions
