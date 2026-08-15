@@ -406,9 +406,8 @@ Therefore, containment reduced the immediate risk but did not return the system 
 
 ### Phase 9: Eradication and Recovery
 
-Following containment, the compromised environment was remediated and restored to a secure operational state.
-
-In a production environment, rebuilding a compromised endpoint from a known-good image would generally provide greater assurance than attempting to clean an affected system in place. For this lab, the existing VM was retained so that remediation, hardening, and recovery procedures could be demonstrated.
+Following containment, selected security controls were restored and the MySQL database was recovered for lab validation. Because the original VM was retained after confirmed external administrator access, the endpoint was not considered fully trusted.   
+In a production environment, reimaging the host from a known-good source would provide greater assurance.
 
 #### Eradication Actions
 - Hardened the Administrator account
@@ -430,7 +429,7 @@ In a production environment, rebuilding a compromised endpoint from a known-good
 
 <br><br>
 <img width="1215" height="946" alt="antivirus" src="https://github.com/user-attachments/assets/9caa394f-639b-4e1b-a752-f5913d9e4010" />
-*Figure 27. Post-containment malware scan initiated on `corp-dc01` using Microsoft Defender Antivirus to identify potential malware and other suspicious artifacts.*
+*Figure 27. Post-containment full malware scan initiated on `corp-dc01` using Microsoft Defender Antivirus to identify potential malware and other suspicious artifacts.*
 
 <br><br>
 <img width="1395" height="1239" alt="sql" src="https://github.com/user-attachments/assets/23dd5a07-df18-4c05-9870-d72d81016ca7" />
