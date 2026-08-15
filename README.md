@@ -59,8 +59,6 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 | Recovery | Windows Firewall restored, Guest account disabled, and the `kt_corp` database restored and validated |
 | Final reports | [Incident Response Report](./assets/SecurityIncidentReport.pdf) · [Host DFIR Report](./assets/HostDFIRReport.pdf) |
 
-[Back to top](#readme-top)
-
 ---
 <a name="objectives"></a>
 
@@ -112,6 +110,8 @@ The environment consists of:
 - Microsoft Sentinel
 
 Telemetry from both Windows and MySQL is centralized into Azure Log Analytics, where Microsoft Sentinel uses custom analytics rules to detect suspicious authentication activity and generate security incidents.
+
+[Back to top](#readme-top)
 
 ---
 
@@ -530,5 +530,7 @@ The lab provided practical experience with cloud security monitoring, detection 
 | Collection | T1213.006 – Data from Information Repositories: Databases | `SELECT` activity against `kt_corp` tables |
 | Defense Evasion | T1562.001 – Impair Defenses | Defender exclusion added for the Octo Browser directory |
 | Impact | T1485 – Data Destruction | Confirmed `DROP TABLE` and `DROP DATABASE` operations |
+
+[Back to top](#readme-top)
 
 ---
