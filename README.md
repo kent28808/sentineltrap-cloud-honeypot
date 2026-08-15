@@ -66,7 +66,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 
 - Deploy an internet-facing Windows virtual machine
 - Configure database activity logging using the MySQL general log
-- Centralize endpoint and database telemetry
+- Collect and correlate endpoint and database telemetry
 - Build custom Microsoft Sentinel analytics rules
 - Detect real-world attacker activity
 - Perform threat hunting using Microsoft Defender XDR
@@ -109,7 +109,7 @@ The environment consists of:
 - Azure Log Analytics Workspace
 - Microsoft Sentinel
 
-Telemetry from both Windows and MySQL is centralized into Azure Log Analytics, where Microsoft Sentinel uses custom analytics rules to detect suspicious authentication activity and generate security incidents.
+Telemetry was collected through two paths. The MySQL general query log was forwarded from `corp-dc01` through Azure Monitor Agent and a Data Collection Rule into the `MySQLAudit_CL` custom table in the `LAW-Cyber-Range` Log Analytics workspace. Windows endpoint telemetry was collected separately by Microsoft Defender for Endpoint and queried through Microsoft Defender XDR. Evidence from both telemetry paths was correlated during the investigation using Microsoft Sentinel and Defender XDR.
 
 [Back to top](#readme-top)
 
@@ -339,11 +339,11 @@ Investigated attacker behavior by correlating endpoint telemetry with database a
 
 ### Phase 8: Containment
 
-After confirming unauthorized endpoint and database activity, `CORP-DC01` was isolated using Microsoft Defender for Endpoint to prevent further attacker communication while preserving the system for forensic collection.
+After confirming unauthorized endpoint and database activity, `corp-dc01` was isolated using Microsoft Defender for Endpoint to prevent further attacker communication while preserving the system for forensic collection.
 
 #### Actions Performed
 
-- Isolated `CORP-DC01` through Microsoft Defender for Endpoint.
+- Isolated `corp-dc01` through Microsoft Defender for Endpoint.
 - Kept the VM powered on to preserve volatile and forensic evidence.
 - Restored restrictive Azure Network Security Group rules.
 - Removed public Internet access to MySQL port `3306`.
@@ -364,7 +364,7 @@ After confirming unauthorized endpoint and database activity, `CORP-DC01` was is
 
 | Field | Value |
 |---|---|
-| Device | `CORP-DC01` |
+| Device | `corp-dc01` |
 | Isolation time | `2026-08-11T16:37:48Z` |
 | Collection started | `2026-08-11T22:10:27Z` |
 | Collection completed | `2026-08-11T22:10:52Z` |
@@ -479,7 +479,7 @@ Findings are classified as benign or suspicious and mapped to relevant MITRE ATT
 
 A Microsoft Sentinel Workbook and source-IP geolocation enrichment were used to visualize the approximate geographic origins of public authentication activity observed against the `corp-dc01` Windows VM and its MySQL service during the exposure period.
 
-Larger bubbles represent locations associated with a higher number of recorded authentication events. Geographic coordinates are derived from source-IP registration data and should be interpreted as approximate network regions—not the physical locations of individual attackers.
+Larger bubbles represent locations associated with a higher number of recorded authentication events. Geographic coordinates are derived from IP-geolocation enrichment and should be interpreted as approximate network regions—not the physical locations of individual attackers.
 
 <img width="1187" height="585" alt="map" src="https://github.com/user-attachments/assets/9530bee1-3d43-4948-970c-d44023c24889" />
 *Figure 29. Microsoft Sentinel Workbook showing the approximate geographic distribution of public authentication activity observed against the Windows VM and MySQL service. Bubble size represents the number of recorded events associated with each location.*
