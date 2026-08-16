@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-# 🛡️ SentinelTrap – Azure Honeypot Detection & Incident Response Lab
+# 🛡️ SentinelTrap: Azure Honeypot Detection & Incident Response Lab
 
 > **An end-to-end Microsoft Azure cyber range that simulates a real-world compromise of an internet-facing Windows server, leveraging Microsoft Defender for Endpoint, Microsoft Sentinel, Azure Monitor, and MySQL general query logging to detect, investigate, and respond to attacker activity.**
 
@@ -51,7 +51,7 @@ Unlike a traditional honeypot demonstration, this project emphasizes the complet
 | Category | Finding |
 |---|---|
 | Exposure window | `2026-07-30T18:44:02Z` through `2026-08-11T16:37:48Z` |
-| Affected asset | `corp-dc01` — Windows 11 Azure VM hosting MySQL |
+| Affected asset | `corp-dc01`- Windows 11 Azure VM hosting MySQL |
 | First confirmed database access | MySQL `root` authentication from `64.89.163.79` at `2026-07-31T01:36:02Z` |
 | Database impact | Enumeration and reading of corporate tables, destructive `DROP TABLE` and `DROP DATABASE` operations, and creation of a Bitcoin ransom note |
 | Endpoint activity | Successful external Administrator logons, Octo Browser installation, PowerShell-based system discovery, a Microsoft Defender exclusion, and outbound Octo-related traffic |
