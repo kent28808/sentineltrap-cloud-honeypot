@@ -112,9 +112,6 @@ The environment consists of:
 Telemetry was collected through two paths. The MySQL general query log was forwarded from `corp-dc01` through Azure Monitor Agent and a Data Collection Rule into the `MySQLAudit_CL` custom table in the `LAW-Cyber-Range` Log Analytics workspace. Windows endpoint telemetry was collected separately by Microsoft Defender for Endpoint and queried through Microsoft Defender XDR. Evidence from both telemetry paths was correlated during the investigation using Microsoft Sentinel and Defender XDR.
 
 
-[⬆️ Back to Top](#top)
-
-
 ---
 
 <a name="project-workflow"></a>
